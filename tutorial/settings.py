@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve(strict=True).parent
+BASE_DIR = Path(PROJECT_DIR).resolve(strict=True).parent
+APPLICATION_DIR = Path(BASE_DIR).resolve(strict=True).parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'tutorial.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [PROJECT_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,4 +123,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATICFILES_DIRS = [
+    PROJECT_DIR / "static",
+]
+
+STATIC_ROOT = APPLICATION_DIR / 'static'
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = APPLICATION_DIR / 'media'
+MEDIA_URL = '/media/'
